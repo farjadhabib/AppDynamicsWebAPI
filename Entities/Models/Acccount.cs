@@ -5,8 +5,8 @@ using System;
 namespace Entities.Models
 {
 	[Table("account")]
-	public class Account
-	{
+	public class Account : IEntity
+    {
 		[Key]
         [Column("AccountID")]
 		public int ID { get; set; }

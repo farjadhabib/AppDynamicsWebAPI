@@ -9,5 +9,6 @@ namespace Contracts
         IEnumerable<Owner> GetAllOwners();
         Owner GetOwnerById(int ownerId);
         OwnerExtended GetOwnerWithDetails(int ownerId);
+        void CreateOwner(Owner owner);
     }
 }

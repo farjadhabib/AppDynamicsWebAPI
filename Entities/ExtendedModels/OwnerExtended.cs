@@ -4,7 +4,7 @@ using Entities.Models;
 
 namespace Entities.ExtendedModels
 {
-    public class OwnerExtended
+    public class OwnerExtended : IEntity
     {
         public int ID { get; set; }
         public string Name { get; set; }
