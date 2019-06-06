@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using LoggerService;
+using Contracts;
 
 namespace AppDynamicsWebAPI.Controllers
 {
@@ -10,10 +12,20 @@ namespace AppDynamicsWebAPI.Controllers
 	[ApiController]
 	public class ValuesController : ControllerBase
 	{
+
+		private ILoggerManager _logger;
+		public ValuesController(ILoggerManager logger)
+		{
+			_logger = logger;
+		}
 		// GET api/values
 		[HttpGet]
 		public ActionResult<IEnumerable<string>> Get()
 		{
+			_logger.LogInfo("Here is info message from our values controller.");
+			_logger.LogDebug("Here is debug message from our values controller.");
+			_logger.LogWarn("Here is warn message from our values controller.");
+			_logger.LogError("Here is error message from our values controller.");
 			return new string[] { "value1", "value2" };
 		}
 
