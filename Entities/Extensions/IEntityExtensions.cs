@@ -10,5 +10,10 @@ namespace Entities.Extensions
         {
             return entity == null;
         }
+
+        public static bool IsEmptyObject(this IEntity entity)
+        {
+            return entity.ID == 0;
+        }
     }
 }
