@@ -14,14 +14,19 @@ namespace AppDynamicsWebAPI.Controllers
 	{
 
 		private ILoggerManager _logger;
-		public ValuesController(ILoggerManager logger)
+		private IRepositoryWrapper _repositoryWrapper;
+		public ValuesController(ILoggerManager logger, IRepositoryWrapper repositoryWrapper)
 		{
 			_logger = logger;
+			_repositoryWrapper = repositoryWrapper;
 		}
 		// GET api/values
 		[HttpGet]
-		public ActionResult<IEnumerable<string>> Get()
+		public IEnumerable<string> Get()
 		{
+			var domesticAccounts = _repositoryWrapper.Account.FindByCondition(x => x.AccountType.Equals("Domestic"));
+			var owners = _repositoryWrapper.Owner.FindAll();
+
 			_logger.LogInfo("Here is info message from our values controller.");
 			_logger.LogDebug("Here is debug message from our values controller.");
 			_logger.LogWarn("Here is warn message from our values controller.");

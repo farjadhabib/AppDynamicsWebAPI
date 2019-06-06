@@ -28,6 +28,8 @@ namespace AppDynamicsWebAPI
 			services.AddDbContext<TodoContext>(opt => opt.UseInMemoryDatabase("TodoList"));
 			services.ConfigureCors();
 			services.ConfigureLoggerService();
+			services.ConfigureSqlContext(Configuration);
+			services.ConfigureRepositoryWrapper();
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 		}
 
