@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
+using LoggerService;
+using Contracts;
 
 namespace AppDynamicsWebAPI.Extensions
 {
@@ -18,6 +16,11 @@ namespace AppDynamicsWebAPI.Extensions
 					.AllowAnyHeader()
 					.AllowCredentials());
 			});
+		}
+
+		public static void ConfigureLoggerService(this IServiceCollection services)
+		{
+			services.AddSingleton<ILoggerManager, LoggerManager>();
 		}
 	}
 }

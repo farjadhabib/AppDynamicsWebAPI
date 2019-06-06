@@ -27,6 +27,7 @@ namespace AppDynamicsWebAPI
 		{
 			services.AddDbContext<TodoContext>(opt => opt.UseInMemoryDatabase("TodoList"));
 			services.ConfigureCors();
+			services.ConfigureLoggerService();
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 		}
 
