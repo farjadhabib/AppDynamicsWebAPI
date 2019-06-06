@@ -8,7 +8,8 @@ namespace Entities.Models
 	public class Owner
 	{
 		[Key]
-		public int OwnerId { get; set; }
+        [Column("OwnerID")]
+		public int ID { get; set; }
 
 		[Required(ErrorMessage = "Name is required")]
 		[StringLength(60, ErrorMessage = "Name can't be longer than 60 characters")]

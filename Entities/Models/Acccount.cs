@@ -8,7 +8,8 @@ namespace Entities.Models
 	public class Account
 	{
 		[Key]
-		public int AccountId { get; set; }
+        [Column("AccountID")]
+		public int ID { get; set; }
 
 		[Required(ErrorMessage = "Date created is required")]
 		public DateTime DateCreated { get; set; }
