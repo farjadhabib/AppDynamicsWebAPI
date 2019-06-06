@@ -70,5 +70,30 @@ namespace AppDynamicsWebAPI.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
+
+        [HttpGet("{id}/account")]
+        public IActionResult GetOwnerWithDetails(int id)
+        {
+            try
+            {
+                var owner = _repository.Owner.GetOwnerWithDetails(id);
+
+                if (owner.ID == 0)
+                {
+                    _logger.LogError($"Owner with id: {id}, hasn't been found in db.");
+                    return NotFound();
+                }
+                else
+                {
+                    _logger.LogInfo($"Returned owner with details for id: {id}");
+                    return Ok(owner);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Something went wrong inside GetOwnerWithDetails action: {ex.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
     }
 }
