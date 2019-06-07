@@ -4,6 +4,7 @@ using Entities;
 using Entities.Models;
 using Entities.ExtendedModels;
 using System.Linq;
+using Entities.Extensions;
 
 namespace Repository
 {
@@ -40,6 +41,12 @@ namespace Repository
         public void CreateOwner(Owner owner)
         {
             Create(owner);
+        }
+
+        public void UpdateOwner(Owner dbOwner, Owner owner)
+        {
+            dbOwner.Map(owner);
+            Update(dbOwner);
         }
     }
 }

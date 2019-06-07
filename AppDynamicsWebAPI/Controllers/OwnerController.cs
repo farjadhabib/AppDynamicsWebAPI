@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Contracts;
 using Entities.Models;
-
+using Entities.Extensions;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace AppDynamicsWebAPI.Controllers
@@ -48,13 +48,13 @@ namespace AppDynamicsWebAPI.Controllers
             {
                 var owner = _repository.Owner.GetOwnerById(id);
 
-                if (owner.ID == 0)
+                if (owner.IsEmptyObject())
                 {
                     _logger.LogError($"Owner with id: {id}, hasn't been found in db.");
                     return NotFound();
                 }
 
-                if (owner == null)
+                if (owner.IsObjectNull())
                 {
                     _logger.LogError($"Owner with id: {id}, hasn't been found in db.");
                     return NotFound();
@@ -79,7 +79,7 @@ namespace AppDynamicsWebAPI.Controllers
             {
                 var owner = _repository.Owner.GetOwnerWithDetails(id);
 
-                if (owner.ID == 0)
+                if (owner.IsEmptyObject())
                 {
                     _logger.LogError($"Owner with id: {id}, hasn't been found in db.");
                     return NotFound();
@@ -122,6 +122,42 @@ namespace AppDynamicsWebAPI.Controllers
             catch (Exception ex)
             {
                 _logger.LogError($"Something went wrong inside CreateOwner action: {ex.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult UpdateOwner(int id, [FromBody]Owner owner)
+        {
+            try
+            {
+                if (owner.IsObjectNull())
+                {
+                    _logger.LogError("Owner object sent from client is null.");
+                    return BadRequest("Owner object is null");
+                }
+
+                if (!ModelState.IsValid)
+                {
+                    _logger.LogError("Invalid owner object sent from client.");
+                    return BadRequest("Invalid model object");
+                }
+
+                var dbOwner = _repository.Owner.GetOwnerById(id);
+                if (dbOwner.IsEmptyObject())
+                {
+                    _logger.LogError($"Owner with id: {id}, hasn't been found in db.");
+                    return NotFound();
+                }
+
+                _repository.Owner.UpdateOwner(dbOwner, owner);
+                _repository.Save();
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Something went wrong inside UpdateOwner action: {ex.Message}");
                 return StatusCode(500, "Internal server error");
             }
         }

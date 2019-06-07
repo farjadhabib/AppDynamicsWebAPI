@@ -10,5 +10,6 @@ namespace Contracts
         Owner GetOwnerById(int ownerId);
         OwnerExtended GetOwnerWithDetails(int ownerId);
         void CreateOwner(Owner owner);
+        void UpdateOwner(Owner dbOwner, Owner owner);
     }
 }
