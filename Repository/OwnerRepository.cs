@@ -48,5 +48,10 @@ namespace Repository
             dbOwner.Map(owner);
             Update(dbOwner);
         }
+
+        public void DeleteOwner(Owner owner)
+        {
+            Delete(owner);
+        }
     }
 }
