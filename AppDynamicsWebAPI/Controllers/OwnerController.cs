@@ -102,7 +102,7 @@ namespace AppDynamicsWebAPI.Controllers
         {
             try
             {
-                if (owner.ID==0)
+                if (owner.IsObjectNull())
                 {
                     _logger.LogError("Owner object sent from client is null.");
                     return BadRequest("Owner object is null");
